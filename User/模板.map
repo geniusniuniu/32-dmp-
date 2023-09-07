@@ -2578,31 +2578,31 @@ Image component sizes
 
          0          0          0          0          0       4500   core_cm3.o
         70          0          0          0          0        890   delay.o
-      6868        292        157         53          0      34167   inv_mpu.o
-      2492        108       3062          0         16      18173   inv_mpu_dmp_motion_driver.o
-        88         16          0          1          0       1069   keys.o
-       876        198          0          8          0       3552   main.o
-       132         22          0          0          0     206907   misc.o
-       680          0          0          0          0       6479   mpu6050.o
-       320         20          0         28          0       2603   mpu_exti.o
-       670        100          0          0          0       4418   mpuiic.o
-      1098         22       1520          0          0       8818   oled.o
-       486         64          0         24         68       3634   pid_control.o
-       252         20          0          0          0       1575   pwm.o
-       208         24          0          8        100       4410   serial.o
+      6868        292        157         53          0      34135   inv_mpu.o
+      2492        108       3062          0         16      18161   inv_mpu_dmp_motion_driver.o
+        88         16          0          1          0       1061   keys.o
+       876        198          0          8          0       3548   main.o
+       132         22          0          0          0     206903   misc.o
+       680          0          0          0          0       6467   mpu6050.o
+       320         20          0         28          0       2595   mpu_exti.o
+       670        100          0          0          0       4410   mpuiic.o
+      1098         22       1520          0          0       8806   oled.o
+       486         64          0         24         68       3630   pid_control.o
+       252         20          0          0          0       1567   pwm.o
+       208         24          0          8        100       4406   serial.o
         36          8        236          0       1024        796   startup_stm32f10x_md.o
          0          0          0          0          0       1640   stm32f10x_adc.o
-       224         22          0          0          0       4653   stm32f10x_exti.o
-       378          4          0          0          0      12894   stm32f10x_gpio.o
-        26          0          0          0          0       3578   stm32f10x_it.o
+       224         22          0          0          0       4645   stm32f10x_exti.o
+       378          4          0          0          0      12890   stm32f10x_gpio.o
+        26          0          0          0          0       3566   stm32f10x_it.o
         64         12          0          0          0       1034   stm32f10x_rcc.o
-      1474        180          0          0          0      32901   stm32f10x_tim.o
+      1474        180          0          0          0      32865   stm32f10x_tim.o
        158          0          0          0          0      10321   stm32f10x_usart.o
-       328         28          0          0          0      30501   system_stm32f10x.o
+       328         28          0          0          0      30489   system_stm32f10x.o
        246         14          0          0          0       1560   tim_encoder.o
 
     ----------------------------------------------------------------------
-     17200       1154       5012        128       1208     401073   Object Totals
+     17200       1154       5012        128       1208     400885   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         26          0          5          6          0          0   (incl. Padding)
 
@@ -2683,8 +2683,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     23876       1432       5252        136       1208     394889   Grand Totals
-     23876       1432       5252        136       1208     394889   ELF Image Totals
+     23876       1432       5252        136       1208     394701   Grand Totals
+     23876       1432       5252        136       1208     394701   ELF Image Totals
      23876       1432       5252        136          0          0   ROM Totals
 
 ==============================================================================

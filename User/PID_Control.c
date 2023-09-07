@@ -64,7 +64,7 @@ float Turn_P(int Turn_Control)
 	//Kd针对转向约束，Kp针对遥控转向,前半是约束，后半是遥控
 	float PID_Turn_Out = Turn_Kd*(float)gz+Turn_Kp*Turn_Control;
 	PID_Turn_Out = PID_Turn_Out>20?20:(PID_Turn_Out<-20?-20:PID_Turn_Out);	
-	return 0;
+	return PID_Turn_Out;
 }
 
 
