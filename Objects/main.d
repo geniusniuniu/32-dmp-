@@ -41,4 +41,3 @@
 .\objects\main.o: .\User\PID_Control.h
 .\objects\main.o: .\Hardware\Tim_Encoder.h
 .\objects\main.o: .\Hardware\PWM.h
-.\objects\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h

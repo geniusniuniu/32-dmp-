@@ -9,10 +9,10 @@
 #include "Tim_Encoder.h"  //定时器编码器模式
 #include "PWM.h" 
 #include "PID_Control.h"
-#include "math.h"
 
-#define Max_Speed 3
-#define Max_Turn_Speed 4
+
+#define Max_Speed 12
+#define Max_Turn_Speed 8
 
 extern uint8_t Flag_Front;
 extern uint8_t Flag_Left;
@@ -22,9 +22,10 @@ extern float Encoder_Integral;
 extern float Turn_Kp;
 extern float Turn_Kd;//负反馈，参数极性>0
 
-
-float Target_Speed = 0;
 float Target_Turn_Speed = 0;
+int Flag;
+
+float Target_Speed = 10;
 
 void MISC_Init(void)
 {
@@ -33,7 +34,7 @@ void MISC_Init(void)
 	Encoder_Init();
 	PID_Init(&PID_Struct);
 	IO_Init(); //反转电平极性
-	//Serial_Init();
+	Serial_Init();
 	
 	MPU_Init();
 	mpu_dmp_init();
@@ -43,11 +44,11 @@ void MISC_Init(void)
 
 void PID_SetParam(PID_Structure *pid)
 {
-	pid->Kp_Vertical = -204;
+	pid->Kp_Vertical = -200;
 	pid->Kd_Vertical = 1.40;
 	
 	pid->Kp_Speed = 0.83;	//给正值，是正反馈
-	pid->Ki_Speed = pid->Kp_Speed / 220;
+	pid->Ki_Speed = pid->Kp_Speed / 210;
 	pid->Speed_expect_value = Target_Speed;//大于0，向右
 	
 }
@@ -59,8 +60,6 @@ void OLED_ShowParam(void)
 	//OLED_ShowFloatNum(4,6,Dis,2,2);
 }
 
-//
-
 int main(void)
 {
 	MISC_Init();
@@ -71,18 +70,24 @@ int main(void)
 	//OLED_ShowString(3, 1, "Rx:");
 	while(1)
 	{	
-		//Serial_Command();
+		Flag = 1;
+		Serial_Command();
 		OLED_ShowParam();
 		OLED_ShowNum(3,1,Flag_Front,1);
 		OLED_ShowNum(3,3,Flag_Back,1);
 		OLED_ShowNum(3,5,Flag_Left,1);
 		OLED_ShowNum(3,7,Flag_Right,1);
 		OLED_ShowFloatNum(3,9,PID_Struct.Pid_out,4,2);
-		if(Flag_Front == 1) 		{OLED_ShowString(4,6,"farward");}
-		else if(Flag_Back == 1) 	{OLED_ShowString(4,6,"Back");}
-		else if(Flag_Left == 1) 	{OLED_ShowString(4,6,"Left");}
-		else if(Flag_Right == 1) 	{OLED_ShowString(4,6,"Right");}
-		else 						{OLED_ShowString(4,6,"Stop");}
+		if(Flag_Front == 1) 		{OLED_ShowString(4,6,"farward");Flag+=1;}
+		else if(Flag_Back == 1) 	{OLED_ShowString(4,6,"Back");Flag+=1;}
+		else if(Flag_Left == 1) 	{OLED_ShowString(4,6,"Left");Flag+=1;}
+		else if(Flag_Right == 1) 	{OLED_ShowString(4,6,"Right");Flag+=1;}
+		else 						{OLED_ShowString(4,6,"Stop");Flag+=1;}
+		while(Flag)
+		{	Flag_Front = 1;
+			Flag--;
+		}
+		
 	}
 }
 
@@ -97,20 +102,20 @@ void EXTI15_10_IRQHandler(void)
 		MPU_Get_Gyroscope(&gx,&gy,&gz);	
 		Speed_Left = TimEncoder_Get(TIM1); //10ms的脉冲数
 		Speed_Right = TimEncoder_Get(TIM3);
-//		//前后
-//		if(Flag_Front == 1) Target_Speed++;
-//		if(Flag_Back == 1) Target_Speed--;
-//		if((Flag_Front == 0)&&(Flag_Back == 0)) Target_Speed = 0;//停止
-//		Target_Speed = Target_Speed>Max_Speed?Max_Speed:(Target_Speed<-Max_Speed?-Max_Speed:Target_Speed); //前后限幅
-//		
-//		//左右
-//		if(Flag_Left == 1) Target_Turn_Speed--;
-//		if(Flag_Right == 1) Target_Turn_Speed++;
-//		if((Flag_Left == 0)&&(Flag_Right == 0))
-//			{Target_Turn_Speed = 0;Turn_Kd = 0.3;}
-//		else if((Flag_Left == 1)||(Flag_Right == 1)) 
-//			Turn_Kd = 0; //停止
-//		Target_Turn_Speed = Target_Turn_Speed>Max_Turn_Speed?Max_Turn_Speed:(Target_Turn_Speed<-Max_Turn_Speed?-Max_Turn_Speed:Target_Turn_Speed);	
+		//前后
+		if(Flag_Front == 1) Target_Speed++;
+		if(Flag_Back == 1) Target_Speed--;
+		if((Flag_Front == 0)&&(Flag_Back == 0)) Target_Speed = 0;//停止
+		Target_Speed = Target_Speed>Max_Speed?Max_Speed:(Target_Speed<-Max_Speed?-Max_Speed:Target_Speed); //前后限幅
+		
+		//左右
+		if(Flag_Left == 1) Target_Turn_Speed--;
+		if(Flag_Right == 1) Target_Turn_Speed++;
+		if((Flag_Left == 0)&&(Flag_Right == 0))
+			{Target_Turn_Speed = 0;Turn_Kd = 0.6;}
+		else if((Flag_Left == 1)||(Flag_Right == 1)) 
+			Turn_Kd = 0; //停止
+		Target_Turn_Speed = Target_Turn_Speed>Max_Turn_Speed?Max_Turn_Speed:(Target_Turn_Speed<-Max_Turn_Speed?-Max_Turn_Speed:Target_Turn_Speed);	
 		
 		Speed_PI(&PID_Struct,Speed_Left,Speed_Right);
 		PID_Struct.Vertical_expect_value = PID_Struct.Pid_Speed_out-2.1;
@@ -123,10 +128,9 @@ void EXTI15_10_IRQHandler(void)
 		else if(PID_Struct.Pid_out<-7000)
 			PID_Struct.Pid_out = -7000;
 		
-		if((Roll-2.1>35)||(2.1-Roll >35)||Roll == 0)
+		if((Roll-2.1>40)||(2.1-Roll >40)||Roll == 0)
 		{
-			PWM_SetCompare1(0); 
-			PWM_SetCompare2(0);
+			PID_Struct.Pid_out = 0;
 			Encoder_Integral = 0;
 		}
 		else

@@ -39,7 +39,6 @@
 ".\objects\mpu_exti.o"
 ".\objects\serial.o"
 ".\objects\delay.o"
-".\objects\timer.o"
 ".\objects\sys.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"

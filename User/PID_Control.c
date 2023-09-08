@@ -4,8 +4,10 @@
 #include "MPU_Exti.h"
 
 PID_Structure PID_Struct;
-float Turn_Kp = 2,Turn_Kd = 0.3;//负反馈，参数极性>0
+float Turn_Kp = 15,Turn_Kd = 0.4;//负反馈，参数极性>0
 float Encoder_Integral;
+
+
 void PID_Init(PID_Structure *pid){
 	
 	//直立环
@@ -45,7 +47,7 @@ void Balance_PD(PID_Structure *pid)
 void Speed_PI(PID_Structure* pid,float Encoder_Left,float Encoder_Right)
 {  
 	static float Encoder,Encoder_last;
-	
+	//static float Encoder_Integral;
 	//测量速度（左右编码器之和）- 目标速度（此处为零） 
 	pid->Speed_now_value = (Encoder_Left + Encoder_Right) - pid->Speed_expect_value; 
 														
@@ -63,7 +65,7 @@ float Turn_P(int Turn_Control)
 {
 	//Kd针对转向约束，Kp针对遥控转向,前半是约束，后半是遥控
 	float PID_Turn_Out = Turn_Kd*(float)gz+Turn_Kp*Turn_Control;
-	PID_Turn_Out = PID_Turn_Out>20?20:(PID_Turn_Out<-20?-20:PID_Turn_Out);	
+	//PID_Turn_Out = PID_Turn_Out>40?40:(PID_Turn_Out<-40?-40:PID_Turn_Out);	
 	return PID_Turn_Out;
 }
 

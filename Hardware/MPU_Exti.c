@@ -47,6 +47,7 @@ void IO_Init(void)
 }
 
 
+
  void GPIO_SetPolarity(void)
 {
 	if(PID_Struct.Pid_out > 0)
@@ -114,10 +115,10 @@ void MPU_Exti_Init()
 //		Speed_PI(&PID_Struct,Speed_Left,Speed_Right);
 //		PID_Struct.Pid_out = PID_Struct.Pid_Vertical_out;
 //		
-//		if(PID_Struct.Pid_out>8000)
-//			PID_Struct.Pid_out = 8000;
-//		else if(PID_Struct.Pid_out<-8000)
-//			PID_Struct.Pid_out = -8000;
+//		if(PID_Struct.Pid_out>7000)
+//			PID_Struct.Pid_out = 7000;
+//		else if(PID_Struct.Pid_out<-7000)
+//			PID_Struct.Pid_out = -7000;
 //		if(Roll > 50 || Roll < -50 || Roll == 0.0)
 //		{
 //			PWM_SetCompare1(0);
