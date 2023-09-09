@@ -88,7 +88,7 @@ int main(void)
 		
 		while(Flag)
 		{	
-			Target_Speed = 10;
+			Target_Speed = 12;
 			Flag_Front = 0;
 			Flag_Back = 0;
 			Flag_Left = 0;
