@@ -1,7 +1,7 @@
 .\objects\tim_encoder.o: Hardware\Tim_Encoder.c
 .\objects\tim_encoder.o: .\Start\stm32f10x.h
 .\objects\tim_encoder.o: .\Start\core_cm3.h
-.\objects\tim_encoder.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\tim_encoder.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\tim_encoder.o: .\Start\system_stm32f10x.h
 .\objects\tim_encoder.o: .\User\stm32f10x_conf.h
 .\objects\tim_encoder.o: .\Library\stm32f10x_adc.h

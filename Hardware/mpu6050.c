@@ -1,6 +1,6 @@
 #include "mpu6050.h"
 #include "sys.h"
-#include "delay.h"
+#include "Delay.h"
 //#include "usart.h"   
 
 //先初始化MPU6050，然后寻址

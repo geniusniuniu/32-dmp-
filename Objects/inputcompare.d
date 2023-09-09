@@ -1,7 +1,7 @@
 .\objects\inputcompare.o: Hardware\InputCompare.c
 .\objects\inputcompare.o: .\Start\stm32f10x.h
 .\objects\inputcompare.o: .\Start\core_cm3.h
-.\objects\inputcompare.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\inputcompare.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\inputcompare.o: .\Start\system_stm32f10x.h
 .\objects\inputcompare.o: .\User\stm32f10x_conf.h
 .\objects\inputcompare.o: .\Library\stm32f10x_adc.h

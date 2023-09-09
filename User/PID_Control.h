@@ -1,6 +1,10 @@
 #ifndef __PID_Control_H
 #define __PID_Control_H
 
+extern float Turn_Kp;
+extern float Turn_Kd;//负反馈，参数极性>0
+extern float Encoder_Integral;
+
 typedef struct PID
 {
 	//直立环

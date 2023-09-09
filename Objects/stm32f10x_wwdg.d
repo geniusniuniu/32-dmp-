@@ -2,7 +2,7 @@
 .\objects\stm32f10x_wwdg.o: Library\stm32f10x_wwdg.h
 .\objects\stm32f10x_wwdg.o: .\Start\stm32f10x.h
 .\objects\stm32f10x_wwdg.o: .\Start\core_cm3.h
-.\objects\stm32f10x_wwdg.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\stm32f10x_wwdg.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\stm32f10x_wwdg.o: .\Start\system_stm32f10x.h
 .\objects\stm32f10x_wwdg.o: .\User\stm32f10x_conf.h
 .\objects\stm32f10x_wwdg.o: .\Library\stm32f10x_adc.h

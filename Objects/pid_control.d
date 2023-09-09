@@ -1,7 +1,7 @@
 .\objects\pid_control.o: User\PID_Control.c
 .\objects\pid_control.o: .\Start\stm32f10x.h
 .\objects\pid_control.o: .\Start\core_cm3.h
-.\objects\pid_control.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\pid_control.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\pid_control.o: .\Start\system_stm32f10x.h
 .\objects\pid_control.o: .\User\stm32f10x_conf.h
 .\objects\pid_control.o: .\Library\stm32f10x_adc.h
@@ -29,5 +29,5 @@
 .\objects\pid_control.o: .\Library\stm32f10x_wwdg.h
 .\objects\pid_control.o: .\Library\misc.h
 .\objects\pid_control.o: User\PID_Control.h
-.\objects\pid_control.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\pid_control.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\pid_control.o: .\Hardware\MPU_Exti.h

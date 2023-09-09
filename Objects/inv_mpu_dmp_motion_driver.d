@@ -1,9 +1,9 @@
 .\objects\inv_mpu_dmp_motion_driver.o: Hardware\MPU\inv_mpu_dmp_motion_driver.c
-.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\string.h
+.\objects\inv_mpu_dmp_motion_driver.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\math.h
 .\objects\inv_mpu_dmp_motion_driver.o: Hardware\MPU\inv_mpu.h
 .\objects\inv_mpu_dmp_motion_driver.o: .\Start\stm32f10x.h
 .\objects\inv_mpu_dmp_motion_driver.o: .\Start\core_cm3.h

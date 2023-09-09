@@ -10,6 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060528::V5.06 update 5 (build 528)::ARMCC</pArmCC>
       <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -324,17 +325,16 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
-            <uGnu>1</uGnu>
             <useXO>0</useXO>
-            <v6Lang>1</v6Lang>
-            <v6LangP>1</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--no-multibyte-chars</MiscControls>
+              <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
               <IncludePath>.\Start;.\Library;.\User;.\Hardware;.\System;.\Hardware\MPU</IncludePath>
@@ -652,16 +652,6 @@
           <GroupName>Hardware</GroupName>
           <Files>
             <File>
-              <FileName>Keys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\Keys.c</FilePath>
-            </File>
-            <File>
-              <FileName>Keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\Keys.h</FilePath>
-            </File>
-            <File>
               <FileName>Led.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\Led.c</FilePath>
@@ -795,6 +785,16 @@
               <FileName>Serial.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\Serial.h</FilePath>
+            </File>
+            <File>
+              <FileName>xunji.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\xunji.c</FilePath>
+            </File>
+            <File>
+              <FileName>xunji.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\xunji.h</FilePath>
             </File>
           </Files>
         </Group>

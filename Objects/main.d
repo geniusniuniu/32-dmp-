@@ -1,7 +1,7 @@
 .\objects\main.o: User\main.c
 .\objects\main.o: .\Start\stm32f10x.h
 .\objects\main.o: .\Start\core_cm3.h
-.\objects\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: .\Start\system_stm32f10x.h
 .\objects\main.o: .\User\stm32f10x_conf.h
 .\objects\main.o: .\Library\stm32f10x_adc.h
@@ -36,8 +36,9 @@
 .\objects\main.o: .\Hardware\mpuiic.h
 .\objects\main.o: .\System\sys.h
 .\objects\main.o: .\Hardware\Serial.h
-.\objects\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: D:\keil5\keil5_MDK\keil5_MDK_32\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\Hardware\MPU_Exti.h
 .\objects\main.o: .\User\PID_Control.h
 .\objects\main.o: .\Hardware\Tim_Encoder.h
 .\objects\main.o: .\Hardware\PWM.h
+.\objects\main.o: .\Hardware\Xunji.h

@@ -6,26 +6,18 @@
 #include "MPU6050.h"
 #include "Serial.h"
 #include "MPU_Exti.h"
-#include "Tim_Encoder.h"  //¶¨Ê±Æ÷±àÂëÆ÷Ä£Ê½
+#include "Tim_Encoder.h"  //ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 #include "PWM.h" 
 #include "PID_Control.h"
+#include "Xunji.h"
 
-
-#define Max_Speed 12
+#define Max_Speed 15
 #define Max_Turn_Speed 8
 
-extern uint8_t Flag_Front;
-extern uint8_t Flag_Left;
-extern uint8_t Flag_Right;
-extern uint8_t Flag_Back;
-extern float Encoder_Integral;
-extern float Turn_Kp;
-extern float Turn_Kd;//¸º·´À¡£¬²ÎÊý¼«ÐÔ>0
-
-float Target_Turn_Speed = 0;
-int Flag;
-
 float Target_Speed = 10;
+float Target_Turn_Speed = 0;
+
+int Flag;
 
 void MISC_Init(void)
 {
@@ -33,23 +25,24 @@ void MISC_Init(void)
 	PWM_Init();
 	Encoder_Init();
 	PID_Init(&PID_Struct);
-	IO_Init(); //·´×ªµçÆ½¼«ÐÔ
+	IO_Init(); //ï¿½ï¿½×ªï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½
 	Serial_Init();
+	Xunji_Init();
 	
 	MPU_Init();
 	mpu_dmp_init();
-	MPU_Exti_Init(); //ÍÓÂÝÒÇÍâ²¿ÖÐ¶Ï³õÊ¼»¯
+	MPU_Exti_Init(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½Ð¶Ï³ï¿½Ê¼ï¿½ï¿½
 }
 
 
 void PID_SetParam(PID_Structure *pid)
 {
 	pid->Kp_Vertical = -200;
-	pid->Kd_Vertical = 1.40;
+	pid->Kd_Vertical = 1.42;
 	
-	pid->Kp_Speed = 0.83;	//¸øÕýÖµ£¬ÊÇÕý·´À¡
+	pid->Kp_Speed = 0.83;	//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	pid->Ki_Speed = pid->Kp_Speed / 210;
-	pid->Speed_expect_value = Target_Speed;//´óÓÚ0£¬ÏòÓÒ
+	pid->Speed_expect_value = Target_Speed;//ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 }
 
@@ -57,7 +50,20 @@ void OLED_ShowParam(void)
 {
 	OLED_ShowFloatNum(1,7,Roll,2,2);
 	OLED_ShowSignedNum(2,7,gx,5);
-	//OLED_ShowFloatNum(4,6,Dis,2,2);
+	OLED_ShowNum(3,1,Flag_Front,1);
+	OLED_ShowNum(3,3,Flag_Back,1);
+	OLED_ShowNum(3,5,Flag_Left,1);
+	OLED_ShowNum(3,7,Flag_Right,1);
+	OLED_ShowFloatNum(3,9,PID_Struct.Pid_out,4,2);
+}
+
+void Xunji_GetValue(void)
+{
+	if((Roll < 18 || Roll > -20))
+	{
+		if(C13_Value == 1)    Flag_Left = 1; //ï¿½ï¿½ï¿½ï¿½âµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if(C14_Value == 1)	  Flag_Right = 1;  //ï¿½Ò²ï¿½ï¿½âµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	}
 }
 
 int main(void)
@@ -72,26 +78,24 @@ int main(void)
 	{	
 		Flag = 1;
 		Serial_Command();
+		Xunji_GetValue();
 		OLED_ShowParam();
-		OLED_ShowNum(3,1,Flag_Front,1);
-		OLED_ShowNum(3,3,Flag_Back,1);
-		OLED_ShowNum(3,5,Flag_Left,1);
-		OLED_ShowNum(3,7,Flag_Right,1);
-		OLED_ShowFloatNum(3,9,PID_Struct.Pid_out,4,2);
-		if(Flag_Front == 1) 		{OLED_ShowString(4,6,"farward");Flag+=1;}
-		else if(Flag_Back == 1) 	{OLED_ShowString(4,6,"Back");Flag+=1;}
-		else if(Flag_Left == 1) 	{OLED_ShowString(4,6,"Left");Flag+=1;}
-		else if(Flag_Right == 1) 	{OLED_ShowString(4,6,"Right");Flag+=1;}
-		else 						{OLED_ShowString(4,6,"Stop");Flag+=1;}
+		if(Flag_Front == 1) 		{OLED_ShowString(4,6,"farward");Flag += 1;printf("Go Forward\r\n");}
+		else if(Flag_Back == 1) 	{OLED_ShowString(4,6,"Back");Flag += 1;printf("Go Back\r\n");}
+		else if(Flag_Left == 1) 	{OLED_ShowString(4,6,"Left");Flag += 1;printf("Turn Left\r\n");}
+		else if(Flag_Right == 1) 	{OLED_ShowString(4,6,"Right");Flag += 1;printf("Turn Right\r\n");}
+		else 						{OLED_ShowString(4,6,"Stop");Flag += 1;/*printf("No Signal\r\n");*/}
+		
 		while(Flag)
-		{	Flag_Front = 1;
+		{	
+			Flag_Front = 0;
 			Flag--;
 		}
 		
 	}
 }
 
-//Íâ²¿ÖÐ¶ÏÏß12·þÎñ³ÌÐò£¨10msÖÐ¶Ï£©
+//ï¿½â²¿ï¿½Ð¶ï¿½ï¿½ï¿½12ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10msï¿½Ð¶Ï£ï¿½
 void EXTI15_10_IRQHandler(void)
 {
 	if(EXTI_GetFlagStatus(EXTI_Line12) == SET)
@@ -100,15 +104,15 @@ void EXTI15_10_IRQHandler(void)
 		mpu_dmp_get_data(&Pitch,&Roll,&Yaw);
 		PID_Struct.Vertical_now_value = Roll;
 		MPU_Get_Gyroscope(&gx,&gy,&gz);	
-		Speed_Left = TimEncoder_Get(TIM1); //10msµÄÂö³åÊý
+		Speed_Left = TimEncoder_Get(TIM1); //10msï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Speed_Right = TimEncoder_Get(TIM3);
-		//Ç°ºó
+		//Ç°ï¿½ï¿½
 		if(Flag_Front == 1) Target_Speed++;
 		if(Flag_Back == 1) Target_Speed--;
 		if((Flag_Front == 0)&&(Flag_Back == 0)) Target_Speed = 0;//Í£Ö¹
-		Target_Speed = Target_Speed>Max_Speed?Max_Speed:(Target_Speed<-Max_Speed?-Max_Speed:Target_Speed); //Ç°ºóÏÞ·ù
+		Target_Speed = Target_Speed>Max_Speed?Max_Speed:(Target_Speed<-Max_Speed?-Max_Speed:Target_Speed); //Ç°ï¿½ï¿½ï¿½Þ·ï¿½
 		
-		//×óÓÒ
+		//ï¿½ï¿½ï¿½ï¿½
 		if(Flag_Left == 1) Target_Turn_Speed--;
 		if(Flag_Right == 1) Target_Turn_Speed++;
 		if((Flag_Left == 0)&&(Flag_Right == 0))
