@@ -170,7 +170,7 @@ uint8_t Serial_Command(void)
 			Flag_Left = 0;
 			Flag_Right = 0;
 			Flag_Back = 0;
-			printf("Go Forward\r\n");
+			printf("Command_Go Forward\r\n");
 		}
 		else if (strcmp(Serial_RxPacket, "a") == 0)
 		{
@@ -178,7 +178,7 @@ uint8_t Serial_Command(void)
 			Flag_Left = 1;
 			Flag_Right = 0;
 			Flag_Back = 0;
-			printf("Turn Left\r\n");
+			printf("Command_Turn Left\r\n");
 		}
 		else if(strcmp(Serial_RxPacket, "d") == 0)
 		{
@@ -186,7 +186,7 @@ uint8_t Serial_Command(void)
 			Flag_Left = 0;
 			Flag_Right = 1;
 			Flag_Back = 0;
-			printf("Turn Right\r\n");
+			printf("Command_Turn Right\r\n");
 		}
 		else if(strcmp(Serial_RxPacket, "s") == 0)
 		{
@@ -194,7 +194,7 @@ uint8_t Serial_Command(void)
 			Flag_Left = 0;
 			Flag_Right = 0;
 			Flag_Back = 1;
-			printf("Go Back\r\n");
+			printf("Command_Go Back\r\n");
 		}
 		else
 		{

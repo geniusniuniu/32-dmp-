@@ -12,7 +12,7 @@
 #include "Xunji.h"
 
 #define Max_Speed 15
-#define Max_Turn_Speed 8
+#define Max_Turn_Speed 10
 
 float Target_Speed = 10;
 float Target_Turn_Speed = 0;
@@ -41,7 +41,7 @@ void PID_SetParam(PID_Structure *pid)
 	pid->Kd_Vertical = 1.42;
 	
 	pid->Kp_Speed = 0.83;	//����ֵ����������
-	pid->Ki_Speed = pid->Kp_Speed / 210;
+	pid->Ki_Speed = pid->Kp_Speed / 220;
 	pid->Speed_expect_value = Target_Speed;//����0������
 	
 }
@@ -54,15 +54,15 @@ void OLED_ShowParam(void)
 	OLED_ShowNum(3,3,Flag_Back,1);
 	OLED_ShowNum(3,5,Flag_Left,1);
 	OLED_ShowNum(3,7,Flag_Right,1);
-	OLED_ShowFloatNum(3,9,PID_Struct.Pid_out,4,2);
+	OLED_ShowFloatNum(3,9,PID_Struct.Speed_expect_value,4,2);
 }
 
 void Xunji_GetValue(void)
 {
-	if((Roll < 18 || Roll > -20))
+	if((Roll < 18 && Roll > -20))
 	{
-		if(C13_Value == 1)    Flag_Left = 1; //����⵽������
-		if(C14_Value == 1)	  Flag_Right = 1;  //�Ҳ��⵽������
+		if(C13_Value == 1)    Flag_Right = 1; //����⵽������
+		if(C14_Value == 1)	  Flag_Left = 1;  //�Ҳ��⵽������
 	}
 }
 
@@ -88,10 +88,13 @@ int main(void)
 		
 		while(Flag)
 		{	
+			Target_Speed = 10;
 			Flag_Front = 0;
+			Flag_Back = 0;
+			Flag_Left = 0;
+			Flag_Right = 0;
 			Flag--;
 		}
-		
 	}
 }
 
@@ -107,20 +110,21 @@ void EXTI15_10_IRQHandler(void)
 		Speed_Left = TimEncoder_Get(TIM1); //10ms��������
 		Speed_Right = TimEncoder_Get(TIM3);
 		//ǰ��
-		if(Flag_Front == 1) Target_Speed++;
-		if(Flag_Back == 1) Target_Speed--;
-		if((Flag_Front == 0)&&(Flag_Back == 0)) Target_Speed = 0;//ֹͣ
+		if(Flag_Front == 1) Target_Speed--;
+		if(Flag_Back == 1) Target_Speed++;
+		if((Flag_Front == 0)&&(Flag_Back == 0)) Target_Speed = 5;//ֹͣ
 		Target_Speed = Target_Speed>Max_Speed?Max_Speed:(Target_Speed<-Max_Speed?-Max_Speed:Target_Speed); //ǰ���޷�
 		
-		//����
+		//左右转
 		if(Flag_Left == 1) Target_Turn_Speed--;
 		if(Flag_Right == 1) Target_Turn_Speed++;
 		if((Flag_Left == 0)&&(Flag_Right == 0))
-			{Target_Turn_Speed = 0;Turn_Kd = 0.6;}
+			{Target_Turn_Speed = 0;Turn_Kd = 0.4;}
 		else if((Flag_Left == 1)||(Flag_Right == 1)) 
 			Turn_Kd = 0; //ֹͣ
 		Target_Turn_Speed = Target_Turn_Speed>Max_Turn_Speed?Max_Turn_Speed:(Target_Turn_Speed<-Max_Turn_Speed?-Max_Turn_Speed:Target_Turn_Speed);	
 		
+		PID_Struct.Speed_expect_value = Target_Speed;
 		Speed_PI(&PID_Struct,Speed_Left,Speed_Right);
 		PID_Struct.Vertical_expect_value = PID_Struct.Pid_Speed_out-2.1;
 		Balance_PD(&PID_Struct);

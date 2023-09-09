@@ -4,7 +4,7 @@
 #include "MPU_Exti.h"
 
 PID_Structure PID_Struct;
-float Turn_Kp = 15,Turn_Kd = 0.4;//负反馈，参数极性>0
+float Turn_Kp = 30,Turn_Kd = 0.4;//负反馈，参数极性>0
 float Encoder_Integral;
 
 
