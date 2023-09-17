@@ -90,7 +90,7 @@ void MPU_Exti_Init()
 	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //2位抢占优先级，2位响应优先级
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;		
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级0 
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //抢占优先级0 
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		//响应优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;						
 	NVIC_Init(&NVIC_InitStructure);
